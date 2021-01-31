@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups</title>
+</head>
+<body>
+<h1>Groups:</h1>
+    {% for group in groups %}
+    <div>
+        <h2>{{ group.course }}</h2>
+        <p>Lecturer: <b>{{ group.teacher.first_name }} {{ group.teacher.last_name}}</b>, {{ group.teacher.email }} </p>
+{#        <p>Students: #}
+{#            {% for student in {{ group.students }} %}#}
+{#                <b>{{ student.first_name }}</b>#}
+{#            {% endfor %}</p>#}
+        {{ group.students }}
+    </div>
+    {% endfor %}
+
+</body>
+</html>
