@@ -9,13 +9,11 @@
     {% for group in groups %}
     <div>
         <h2>{{ group.course }}</h2>
-        <p>Lecturer: <b>{{ group.teacher.first_name }} {{ group.teacher.last_name}}</b>, {{ group.teacher.email }} </p>
-{#        <p>Students: #}
-{#            {% for student in {{ group.students }} %}#}
-{#                <b>{{ student.first_name }}</b>#}
-{#            {% endfor %}</p>#}
-        {{ group.students }}
-
+        <p>Lecturer: <b>{{ group.teacher.first_name }} {{ group.teacher.last_name}}, {{ group.teacher.email }}</b> </p>
+        <p>Students:
+            {% for student in group.students.all %}
+                <p><b>{{ student.first_name }} {{ student.last_name }} ({{ student.email }})</b>
+            {% endfor %}
     </div>
     {% endfor %}
 
