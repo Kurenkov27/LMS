@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 # Create your models here.
 
 
@@ -22,7 +21,3 @@ class Group(models.Model):
     course = models.CharField(max_length=150)
     students = models.ManyToManyField(Student)
     teacher = models.OneToOneField(Lecturer, on_delete=models.CASCADE)
-
-
-
-
