@@ -1,9 +1,11 @@
+from academy.models import Group, Lecturer, Student
+
 from django.shortcuts import render
+
 from django.http import HttpResponse
 
 
 # Create your views here.
-from academy.models import Student, Lecturer, Group
 
 
 def index(request):
