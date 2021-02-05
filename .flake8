@@ -1,6 +1,6 @@
 [flake8]
 # some comment
-ignore = E902
+ignore = E902, I202
 max-complexity = 10
 max_line_length = 120
 exclude = tests, setup.py, __init__.py

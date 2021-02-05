@@ -3,7 +3,6 @@ from academy.models import Group, Lecturer, Student
 from django.http import HttpResponse
 
 from django.shortcuts import render
-
 # Create your views here.
 
 
