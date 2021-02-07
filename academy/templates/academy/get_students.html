@@ -6,6 +6,10 @@
 </head>
 <body>
 <h1>Students:</h1>
+    <a href="/students/create_student">
+        <button>Create new student</button>
+    </a>
+    <p>
     {% for student in students %}
     <div>
         <b>{{ student.first_name }} {{ student.last_name}}</b>, {{ student.email }}

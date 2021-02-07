@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Lecturer</title>
+</head>
+<body>
+<a href="/lecturers"> <button><=Back</button></a>
+    {% if new_lecturer %}
+        <p><b> New lecturer has been created successfully! </b>
+        <p><a href="/lecturers/create_lecturer">Add new?</a>
+    {% else %}
+        <form method="post">
+            {{ lecturer_form.as_p }}
+            {% csrf_token %}
+            <p><input type='submit' value='Create lecturer'></p>
+        </form>
+    {% endif %}
+</body>
+</html>

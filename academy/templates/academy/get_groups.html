@@ -6,6 +6,10 @@
 </head>
 <body>
 <h1>Groups:</h1>
+    <a href="/groups/create_group">
+        <button>Create new group</button>
+    </a>
+    <p>
     {% for group in groups %}
     <div>
         <h2>{{ group.course }}</h2>

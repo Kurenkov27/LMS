@@ -6,6 +6,10 @@
 </head>
 <body>
 <h1>Lecturers:</h1>
+    <a href="/lecturers/create_lecturer">
+        <button>Create new lecturer</button>
+    </a>
+    <p>
     {% for lecturer in lecturers %}
     <div>
         <b>{{ lecturer.first_name }} {{ lecturer.last_name}}</b>, {{ lecturer.email }}
