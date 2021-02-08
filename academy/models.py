@@ -29,4 +29,4 @@ class Group(models.Model):
     teacher = models.OneToOneField(Lecturer, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.course}, #{len(self.students)} students'
+        return f'{self.course}'
