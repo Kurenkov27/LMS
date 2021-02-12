@@ -10,7 +10,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 
 def index(request):
-    return HttpResponse("Hello, World!")
+    return render(request, 'academy/main_page.html')
 
 
 # Create your views here.
