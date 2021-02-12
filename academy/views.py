@@ -87,8 +87,6 @@ def edit_student(request, student_id):
         if form.is_valid():
             student.save()
             return redirect('get_students')
-        else:
-            print(form.errors)
 
     form = StudentForm(instance=student)
     return render(request, 'academy/edit_student.html', {'form': form})
@@ -106,8 +104,6 @@ def edit_lecturer(request, lecturer_id):
         if form.is_valid():
             lecturer.save()
             return redirect('get_lecturers')
-        else:
-            print(form.errors)
 
     form = LecturerForm(instance=lecturer)
     return render(request, 'academy/edit_lecturer.html', {'form': form})
@@ -125,8 +121,6 @@ def edit_group(request, group_id):
         if form.is_valid():
             group.save()
             return redirect('get_groups')
-        else:
-            print(form.errors)
 
     form = GroupForm(instance=group)
     return render(request, 'academy/edit_group.html', {'form': form})
