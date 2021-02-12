@@ -1,7 +1,6 @@
 from academy.forms import StudentForm, LecturerForm, GroupForm
 from academy.models import Group, Lecturer, Student
 
-from django.http import HttpResponse
 
 from django.shortcuts import render, get_object_or_404, redirect
 
