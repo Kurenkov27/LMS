@@ -3,7 +3,7 @@ from academy.models import Group, Lecturer, Student
 
 from django.http import HttpResponse
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 
 
 # Create your views here.
@@ -78,3 +78,57 @@ def get_group(request):
     }
 
     return render(request, 'academy/create_group.html', context)
+
+
+def edit_student(request, student_id):
+    student = get_object_or_404(Student, student_id=student_id)
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            student = form.save(commit=False)
+            student.save()
+            return redirect('get_students')
+
+    form = StudentForm(instance=student)
+    return render(request, 'academy/edit_student.html', {'form': form})
+
+
+def delete_student(request, student_id):
+    Student.objects.filter(student_id=student_id).delete()
+    return redirect('get_students')
+
+
+def edit_lecturer(request, lecturer_id):
+    lecturer = get_object_or_404(Lecturer, lecturer_id=lecturer_id)
+    if request.method == 'POST':
+        form = LecturerForm(request.POST, instance=lecturer)
+        if form.is_valid():
+            lecturer = form.save(commit=False)
+            lecturer.save()
+            return redirect('get_lecturers')
+
+    form = LecturerForm(instance=lecturer)
+    return render(request, 'academy/edit_lecturer.html', {'form': form})
+
+
+def delete_lecturer(request, lecturer_id):
+    Lecturer.objects.filter(lecturer_id=lecturer_id).delete()
+    return redirect('get_lecturers')
+
+
+def edit_group(request, group_id):
+    group = get_object_or_404(Group, group_id=group_id)
+    if request.method == 'POST':
+        form = GroupForm(request.POST, instance=group)
+        if form.is_valid():
+            group = form.save(commit=False)
+            group.save()
+            return redirect('get_groups')
+
+    form = GroupForm(instance=group)
+    return render(request, 'academy/edit_group.html', {'form': form})
+
+
+def delete_group(request, group_id):
+    Group.objects.filter(group_id=group_id).delete()
+    return redirect('get_groups')

@@ -18,6 +18,10 @@
             {% for student in group.students.all %}
                 <p><b>{{ student.first_name }} {{ student.last_name }} ({{ student.email }})</b>
             {% endfor %}
+        <p></p>
+        <a href="{% url 'edit_group' group_id=group.group_id %}"><button>Edit</button></a>
+        <a href="{% url 'delete_group' group_id=group.group_id %}"><button>Delete</button></a>
+        <p></p>
     </div>
     {% endfor %}
 

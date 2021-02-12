@@ -13,6 +13,10 @@
     {% for student in students %}
     <div>
         <b>{{ student.first_name }} {{ student.last_name}}</b>, {{ student.email }}
+        <p></p>
+        <a href="{% url 'edit_student' student_id=student.student_id %}"><button>Edit</button></a>
+        <a href="{% url 'delete_student' student_id=student.student_id %}"><button>Delete</button></a>
+        <p></p>
     </div>
     {% endfor %}
 
