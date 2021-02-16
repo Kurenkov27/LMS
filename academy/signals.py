@@ -1,6 +1,6 @@
-from django.db.models.signals import pre_save
-
 from academy.models import Group, Lecturer, Student
+
+from django.db.models.signals import pre_save
 
 from django.dispatch import receiver
 
