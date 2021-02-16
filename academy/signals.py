@@ -1,6 +1,8 @@
 from django.db.models.signals import pre_save
-from django.dispatch import receiver
+
 from academy.models import Group, Lecturer, Student
+
+from django.dispatch import receiver
 
 
 @receiver(pre_save, sender=Student)
@@ -18,4 +20,3 @@ def capitalize_lecturer(sender, instance, **kwargs):
 @receiver(pre_save, sender=Group)
 def capitalize_person(sender, instance, **kwargs):
     instance.course = instance.course.capitalize()
-
