@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit group</title>
-</head>
-<body>
+{% extends 'academy/edit_base.html' %}
 
-    <h1>Edit group</h1>
-    <a href="/groups"> <button><=Back</button></a>
-    <form method="POST">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button type="submit">Save</button>
-    </form>
+{% block title %}
+    Edit group
+{% endblock %}
 
-</body>
-</html>
+{% block div %}
+    <a href="/groups"><button><=Back</button></a>
+{% endblock %}

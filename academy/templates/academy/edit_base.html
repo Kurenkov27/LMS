@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}LMS{% endblock %}</title>
+</head>
+<body>
+    <h1>{% block h1 %}Edit instance{% endblock %}</h1>
+    <div>{% block div %}Link back{% endblock %}</div>
+    <form method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
