@@ -1,8 +1,8 @@
 from django.db.models.signals import pre_save
 
-from academy.models import Group, Lecturer, Student
-
 from django.dispatch import receiver
+
+from academy.models import Group, Lecturer, Student
 
 
 @receiver(pre_save, sender=Student)
