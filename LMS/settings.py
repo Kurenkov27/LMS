@@ -21,15 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'oyiad&&apr_=4ok$elokd#$p!3ir#hvxron8onkh1i$q!6i#5*'
+SECRET_KEY = '---INVICIBLE---'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 # SENDGRID Constants
-SENDGRID_KEY ='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'
-EMAIL_SENDER = 'hillelpost@pm.me'
-EMAIL_RECEIVER = 'baker.kolyamba91@gmail.com'
+SENDGRID_KEY ='---INVICIBLE---'
+EMAIL_SENDER = '---INVICIBLE---'
+EMAIL_RECEIVER = '---INVICIBLE---'
 
 ALLOWED_HOSTS = []
 
