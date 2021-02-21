@@ -14,6 +14,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from celery.schedules import crontab
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -31,6 +33,9 @@ SENDGRID_KEY ='SG.ZW4Noy5DQQuBiNWtjQYT-w.xVoSTj27VaSb4bhL5iHG1liQmn-UUfjyrk_i_dX
 EMAIL_SENDER = 'hillelpost@pm.me'
 EMAIL_RECEIVER = 'baker.kolyamba91@gmail.com'
 
+# Celery
+CELERY_BROKER_URL = 'amqp://localhost'
+
 ALLOWED_HOSTS = []
 
 
@@ -45,7 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'academy.apps.AcademyConfig',
     'silk',
-    'logger'
+    'logger',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -129,3 +135,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
