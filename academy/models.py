@@ -30,3 +30,13 @@ class Group(models.Model):
 
     def __str__(self):
         return f'{self.course}'
+
+
+class Message(models.Model):
+    message_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=30, blank=True, null=True)
+    email = models.EmailField(max_length=250)
+    message = models.TextField(max_length=1000)
+
+    def __str__(self):
+        return f'Message from {self.email}'

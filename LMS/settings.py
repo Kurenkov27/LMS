@@ -26,6 +26,11 @@ SECRET_KEY = 'oyiad&&apr_=4ok$elokd#$p!3ir#hvxron8onkh1i$q!6i#5*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# SENDGRID Constants
+SENDGRID_KEY ='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'
+EMAIL_SENDER = 'hillelpost@pm.me'
+EMAIL_RECEIVER = 'baker.kolyamba91@gmail.com'
+
 ALLOWED_HOSTS = []
 
 

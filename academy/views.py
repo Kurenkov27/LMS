@@ -1,5 +1,5 @@
-from academy.forms import StudentForm, LecturerForm, GroupForm
-from academy.models import Group, Lecturer, Student
+from academy.forms import StudentForm, LecturerForm, GroupForm, MessageForm
+from academy.models import Group, Lecturer, Student, Message
 
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -128,3 +128,20 @@ def edit_group(request, group_id):
 def delete_group(request, group_id):
     Group.objects.filter(group_id=group_id).delete()
     return redirect('get_groups')
+
+
+def send_message(request):
+    new_message = None
+
+    if request.method == 'POST':
+        message_form = MessageForm(data=request.POST)
+        if message_form.is_valid():
+            new_message = message_form.save(commit=False)
+            new_message.save()
+
+    context = {
+        'message_form': MessageForm(),
+        'new_message': new_message
+    }
+
+    return render(request, 'academy/create_message.html', context)

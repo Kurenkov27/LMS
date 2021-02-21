@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+</head>
+<body>
+<a href="/"> <button>Home</button></a>
+    {% if new_message %}
+        <p><b> Your message was sent! </b>
+        <p><a href="/contact"><=Back</a>
+    {% else %}
+        <form method="post">
+            {{ message_form.as_p }}
+            {% csrf_token %}
+            <p><input type='submit' value='Send message'></p>
+        </form>
+    {% endif %}
+</body>
+</html>
