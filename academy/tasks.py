@@ -1,9 +1,34 @@
-from celery import shared_task, app
+from celery import shared_task
 
-#from LMS.celery import app
+# from LMS.celery import app
+from django.template.loader import render_to_string
+
+from sendgrid import Mail, SendGridAPIClient
+
+from LMS.settings import EMAIL_SENDER, EMAIL_RECEIVER, SENDGRID_KEY
+
 from logger.models import LogRecord
+
 
 @shared_task
 def clear_log():
-    print('clear_log worked!')
     LogRecord.objects.delete()
+
+
+@shared_task
+def send_email(data):
+    print('works')
+    context = {
+        'name': data['name'],
+        'email': data['email'],
+        'message': data['message']
+    }
+    content = render_to_string('academy/added_message.html', context)
+    message = Mail(
+        from_email=EMAIL_SENDER,
+        to_emails=EMAIL_RECEIVER,
+        subject='Added new comment',
+        html_content=content
+    )
+    sg = SendGridAPIClient(SENDGRID_KEY)
+    sg.send(message)

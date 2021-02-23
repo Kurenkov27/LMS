@@ -1,16 +1,11 @@
-from django.template.loader import render_to_string
-
-from LMS.settings import SENDGRID_KEY, EMAIL_SENDER, EMAIL_RECEIVER
-
 from academy.models import Group, Lecturer, Student, Message
 
 from django.db.models.signals import pre_save, post_save
 
 from django.dispatch import receiver
 
-from sendgrid import SendGridAPIClient
+from .tasks import send_email
 
-from sendgrid.helpers.mail import Mail
 
 
 @receiver(pre_save, sender=Student)
@@ -31,14 +26,6 @@ def capitalize_person(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=Message)
-def send_notification(sender, instance, **kwargs):
-    context = {'message': instance}
-    content = render_to_string('academy/added_message.html', context)
-    message = Mail(
-        from_email=EMAIL_SENDER,
-        to_emails=EMAIL_RECEIVER,
-        subject='Added new comment',
-        html_content=content
-    )
-    sg = SendGridAPIClient(SENDGRID_KEY)
-    sg.send(message)
+def initiate_sending_email(sender, instance, **kwargs):
+    send_email.delay(instance.to_dict())
+

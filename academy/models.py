@@ -40,3 +40,10 @@ class Message(models.Model):
 
     def __str__(self):
         return f'Message from {self.email}'
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'email': self.email,
+            'message': self.message
+        }
