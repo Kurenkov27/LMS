@@ -12,7 +12,7 @@ from logger.models import LogRecord
 
 @shared_task
 def clear_log():
-    LogRecord.objects.delete()
+    LogRecord.objects.all().delete()
 
 
 @shared_task
