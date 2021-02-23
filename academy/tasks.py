@@ -12,12 +12,11 @@ from logger.models import LogRecord
 
 @shared_task
 def clear_log():
-    LogRecord.objects.delete()
+    LogRecord.objects.all().delete()
 
 
 @shared_task
 def send_email(data):
-    print('works')
     context = {
         'name': data['name'],
         'email': data['email'],

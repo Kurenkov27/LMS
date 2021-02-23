@@ -1,11 +1,12 @@
 from academy.forms import StudentForm, LecturerForm, GroupForm, MessageForm
-from academy.models import Group, Lecturer, Student, Message
+from academy.models import Group, Lecturer, Student
 
 
 from django.shortcuts import render, get_object_or_404, redirect
 
 
 # Create your views here.
+from logger.models import LogRecord
 
 
 def index(request):
@@ -145,3 +146,4 @@ def send_message(request):
     }
 
     return render(request, 'academy/create_message.html', context)
+

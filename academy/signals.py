@@ -7,7 +7,6 @@ from django.dispatch import receiver
 from .tasks import send_email
 
 
-
 @receiver(pre_save, sender=Student)
 def capitalize_student(sender, instance, **kwargs):
     instance.first_name = instance.first_name.capitalize()
