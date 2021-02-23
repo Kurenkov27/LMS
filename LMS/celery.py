@@ -17,8 +17,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.conf.beat_schedule = {
     'clear-log': {
         'task': 'academy.tasks.clear_log',
-        'schedule': 10.0,
-    # 'schedule': crontab(hour=0, minute=0),
+        'schedule': crontab(hour=0, minute=0),
     }
 }
 
