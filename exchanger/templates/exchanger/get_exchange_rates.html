@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rates</title>
+</head>
+<body>
+    <table>
+        <thread>
+            <tr>
+                <th></th>
+                <th>USD</th>
+                <th>EUR</th>
+                <th>RUB</th>
+            </tr>
+        </thread>
+        <tbody>
+            <tr>
+                <th>Buy</th>
+
+                <td bgcolor={{ usd_buy_status }}>{{ usd_buy }}</td>
+                <td bgcolor={{ eur_buy_status }}>{{ eur_buy }}</td>
+                <td bgcolor={{ rur_buy_status }}>{{ rur_buy }}</td>
+            </tr>
+            <tr>
+                <th>Sale</th>
+                <td bgcolor={{ usd_sell_status }}>{{ usd_sell }}</td>
+                <td bgcolor={{ eur_sell_status }}>{{ eur_sell }}</td>
+                <td bgcolor={{ rur_sell_status }}>{{ rur_sell }}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -10,5 +10,10 @@
     <a href="{% url 'get_lecturers' %}"> <button>Lecturers</button></a>
     <a href="{% url 'get_groups' %}"> <button>Groups</button></a>
     <a href="{% url 'create_message' %}"> <button>Contact Us</button></a>
+    {% block content %}
+        <p>Currency Exchange Rates:
+        {% include 'exchanger/get_exchange_rates.html' %}
+    {% endblock %}
+
 </body>
 </html>

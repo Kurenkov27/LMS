@@ -21,3 +21,6 @@
 /celerybeat-schedule.bak
 /celerybeat-schedule.dat
 /celerybeat-schedule.dir
+/env
+/exchanger/__pycache__/
+/exchanger/__init__.py

@@ -36,6 +36,8 @@ EMAIL_RECEIVER = 'baker.kolyamba91@gmail.com'
 # Celery
 CELERY_BROKER_URL = 'amqp://localhost'
 
+EXCHANGE_RATES_SOURCE = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'
+
 ALLOWED_HOSTS = []
 
 
@@ -51,7 +53,8 @@ INSTALLED_APPS = [
     'academy.apps.AcademyConfig',
     'silk',
     'logger',
-    'django_celery_beat'
+    'django_celery_beat',
+    'exchanger'
 ]
 
 MIDDLEWARE = [

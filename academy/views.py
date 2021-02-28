@@ -6,11 +6,18 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 
 # Create your views here.
+from exchanger.models import ExchangeRate
 from logger.models import LogRecord
 
 
 def index(request):
-    return render(request, 'academy/main_page.html')
+    exchange_rates = ExchangeRate.objects.all()
+    context = {
+        k: v for ex_rate in exchange_rates
+        for k, v in ex_rate.to_dict().items()
+    }
+    print(context)
+    return render(request, 'academy/main_page.html',  context)
 
 
 # Create your views here.
