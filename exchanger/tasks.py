@@ -19,13 +19,20 @@ def get_exchange_rates():
     for rate in exchange_rates:
         try:
             old_rate = ExchangeRate.objects.get(id=rate.id)
-        except:
+        except ExchangeRate.DoesNotExist:
             old_rate = rate
         rate.buy_status = get_great_or_less_status(old_rate.buy, rate.buy)
         rate.sell_status = get_great_or_less_status(old_rate.sell, rate.sell)
         exchange_rates_with_status.append(rate)
-    ExchangeRate.objects.all().delete()
-    ExchangeRate.objects.bulk_create(exchange_rates_with_status)
+    ExchangeRate.objects.bulk_update_or_create(exchange_rates_with_status,
+                                               ['currency_a',
+                                                'currency_b',
+                                                'buy',
+                                                'buy_status',
+                                                'sell',
+                                                'sell_status',
+                                                'created_time'
+                                                ], match_field='currency_a')
 
 
 def filter_out_rates(rates):

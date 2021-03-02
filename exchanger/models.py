@@ -1,5 +1,7 @@
 from django.db import models
 
+from bulk_update_or_create import BulkUpdateOrCreateQuerySet
+
 # Create your models here.
 from django.utils import timezone
 
@@ -14,6 +16,7 @@ def get_color_status(a):
 
 
 class ExchangeRate(models.Model):
+    objects = BulkUpdateOrCreateQuerySet.as_manager()
     id = models.CharField(max_length=6, primary_key=True)
     currency_a = models.CharField(max_length=3)
     currency_b = models.CharField(max_length=3)
