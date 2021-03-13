@@ -1,30 +1,75 @@
+{% load static %}
+{% load academy_extras %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%  static 'academy/styles.css' %}">
     <title>Groups</title>
 </head>
 <body>
-<a href="{% url 'home' %}"> <button>Home</button></a>
-<h1>Groups:</h1>
-    <a href="/groups/create_group">
-        <button>Create new group</button>
-    </a>
-    <p>
-    {% for group in groups %}
-    <div>
-        <h2>{{ group.course }}</h2>
-        <p>Lecturer: <b>{{ group.teacher.first_name }} {{ group.teacher.last_name}}, {{ group.teacher.email }}</b> </p>
-        <p>Students:
-            {% for student in group.students.all %}
-                <p><b>{{ student.first_name }} {{ student.last_name }} ({{ student.email }})</b>
-            {% endfor %}
-        <p></p>
-        <a href="{% url 'edit_group' group_id=group.group_id %}"><button>Edit</button></a>
-        <a href="{% url 'delete_group' group_id=group.group_id %}"><button>Delete</button></a>
-        <p></p>
+    <div class ="row header">
+        <div class="col-md-10">
+            <a href="/">
+                <button type="button" class="btn btn-primary">Home</button>
+            </a>
+            <a href="/groups/create_group">
+                <button type="button" class="btn btn-primary">Create new group</button>
+            </a>
+        </div>
+        <div class="col-md-2">
+        </div>
     </div>
-    {% endfor %}
+    <div class ="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <ul class="list-group">
+                {% for group in groups %}
+                    <li class="col-md-12 list-group-item convert">
+                            <div class ="row course_name">
+                                <h2>{{ group.course }}</h2>
+                            </div>
+                            <div class="col-md-8 group_item">
 
+                                <div class ="row">
+                                    <div class="col-md-10">
+                                        <p>Lecturer:</p>
+                                    </div>
+                                    <div class ="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-11">
+                                               <p><b>{{ group.teacher.first_name }} {{ group.teacher.last_name}}, {{ group.teacher.email }}</b>
+                                        </div>
+                                    </div>
+                                    <div class ="row">
+                                        <div class="col-md-10"></div>
+                                            <p>Students, #{{ group.students|get_count }}:
+                                        <div class ="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-10">
+                                                    {% for student in group.students.all %}
+                                                        <div class="col-md-10">
+                                                            <p><b>{{ student.first_name }} {{ student.last_name }}</b>
+                                                            ({{ student.email }})
+                                                        </div>
+                                                        <p></p>
+                                                    {% endfor %}
+                                                <p></p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{% url 'edit_group' group_id=group.group_id %}"><button class="btn btn-warning">Edit</button></a>
+                                <a href="{% url 'delete_group' group_id=group.group_id %}"><button class="btn btn-danger">Delete</button></a>
+                            </div>
+                    </li>
+                    <p></p>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </body>
 </html>
