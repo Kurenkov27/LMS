@@ -30,7 +30,7 @@
                 {% for group in groups %}
                     <li class="col-md-12 list-group-item convert">
                             <div class ="row course_name">
-                                <h2>{{ group.course }}</h2>
+                                <h2>{{ group.course }} ({{ group.students|get_count }} students)</h2>
                             </div>
                             <div class="col-md-8 group_item">
 
@@ -46,7 +46,7 @@
                                     </div>
                                     <div class ="row">
                                         <div class="col-md-10"></div>
-                                            <p>Students, #{{ group.students|get_count }}:
+                                            <p>Students:
                                         <div class ="row">
                                             <div class="col-md-1"></div>
                                             <div class="col-md-10">
