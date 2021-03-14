@@ -1,25 +1,43 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%  static 'academy/styles.css' %}">
     <title>Lecturers</title>
 </head>
 <body>
-<a href="{% url 'home' %}"> <button>Home</button></a>
-<h1>Lecturers:</h1>
-    <a href="/lecturers/create_lecturer">
-        <button>Create new lecturer</button>
-    </a>
-    <p>
-    {% for lecturer in lecturers %}
-    <div>
-        <b>{{ lecturer.first_name }} {{ lecturer.last_name}}</b>, {{ lecturer.email }}
-        <p></p>
-        <a href="{% url 'edit_lecturer' lecturer_id=lecturer.lecturer_id %}"><button>Edit</button></a>
-        <a href="{% url 'delete_lecturer' lecturer_id=lecturer.lecturer_id %}"><button>Delete</button></a>
-        <p></p>
+    <div class ="row header">
+            <div class="col-md-6">
+                <a href="/">
+                    <button type="button" class="btn btn-primary">Home</button>
+                </a>
+                <a href="/lecturers/create_lecturer">
+                    <button type="button" class="btn btn-primary">Create new lecturer</button>
+                </a>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3 create_new"></div>
     </div>
-    {% endfor %}
+    <ul class="list-group">
+        {% for lecturer in lecturers %}
+            <div class ="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <li class="list-group-item convert">
+                        <b>{{ lecturer.first_name }} {{ lecturer.last_name}}</b>, {{ lecturer.email }}
+                        <p></p>
+                        <img class="photo" src="{{ lecturer.photo.url }}">
+                        <br/><br/>
+                        <a href="{% url 'edit_lecturer' lecturer_id=lecturer.lecturer_id %}"><button class="btn btn-warning">Edit</button></a>
+                        <a href="{% url 'delete_lecturer' lecturer_id=lecturer.lecturer_id %}"><button class="btn btn-danger">Delete</button></a>
+                    </li>
+                    <br/>
+                </div>
+            </div>
+        {% endfor %}
+    </ul>
 
 </body>
 </html>

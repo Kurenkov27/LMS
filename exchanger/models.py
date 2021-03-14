@@ -8,11 +8,11 @@ from django.utils import timezone
 
 def get_color_status(a):
     if a == 1:
-        return "green"
+        return "text-success"
     elif a == -1:
-        return "red"
+        return "text-danger"
     else:
-        return "yellow"
+        return "text-dark"
 
 
 class ExchangeRate(models.Model):

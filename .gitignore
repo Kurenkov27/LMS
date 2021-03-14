@@ -24,3 +24,7 @@
 /env
 /exchanger/__pycache__/
 /exchanger/__init__.py
+*.png
+*.jpg
+/academy/templatetags/__pycache__/
+/celerybeat-schedule
