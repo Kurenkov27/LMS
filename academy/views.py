@@ -1,5 +1,6 @@
 from academy.forms import StudentForm, LecturerForm, GroupForm, MessageForm
 from academy.models import Group, Lecturer, Student
+from django.views.decorators.cache import cache_page
 
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -138,6 +139,7 @@ def delete_group(request, group_id):
     return redirect('get_groups')
 
 
+@cache_page(60 * 5)
 def send_message(request):
     new_message = None
 
