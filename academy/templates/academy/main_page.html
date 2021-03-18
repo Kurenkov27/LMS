@@ -1,4 +1,6 @@
 {% load static %}
+{% load cache %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,21 +11,23 @@
     <title>Academy</title>
 </head>
 <body>
-    <div class ="row header">
-        <div class="col-md-1">
-            <span class ="logo">Academy:</span>
+    {% cache 600 header %}
+        <div class ="row header">
+            <div class="col-md-1">
+                <span class ="logo">Academy:</span>
+            </div>
+            <div class="col-md-8">
+                <a href="{% url 'get_students' %}"> <button type="button" class="btn btn-primary">Students</button></a>
+                <a href="{% url 'get_lecturers' %}"> <button type="button" class="btn btn-primary">Lecturers</button></a>
+                <a href="{% url 'get_groups' %}"> <button type="button" class="btn btn-primary">Groups</button></a>
+            </div>
+            <div class="col-md-1 contact"></div>
+            <div class="col-md-2 contact">
+                <a href="{% url 'create_message' %}"><button type="button" class="btn btn-primary">Contact Us</button></a>
+            </div>
+            <div class="col-md-1 contact"></div>
         </div>
-        <div class="col-md-8">
-            <a href="{% url 'get_students' %}"> <button type="button" class="btn btn-primary">Students</button></a>
-            <a href="{% url 'get_lecturers' %}"> <button type="button" class="btn btn-primary">Lecturers</button></a>
-            <a href="{% url 'get_groups' %}"> <button type="button" class="btn btn-primary">Groups</button></a>
-        </div>
-        <div class="col-md-1 contact"></div>
-        <div class="col-md-2 contact">
-            <a href="{% url 'create_message' %}"><button type="button" class="btn btn-primary">Contact Us</button></a>
-        </div>
-        <div class="col-md-1 contact"></div>
-    </div>
+    {% endcache %}
     <div class = "row currency">
         <div class="col-md-9">
         </div>

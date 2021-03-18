@@ -13,9 +13,11 @@
                 <a href="/">
                     <button type="button" class="btn btn-primary">Home</button>
                 </a>
-                <a href="/students/create_student">
-                    <button type="button" class="btn btn-primary">Create new student</button>
-                </a>
+                {% if user.is_authenticated %}
+                    <a href="/students/create_student">
+                        <button type="button" class="btn btn-primary">Create new student</button>
+                    </a>
+                {% endif %}
             </div>
             <div class="col-md-3"></div>
             <div class="col-md-3"></div>
@@ -30,8 +32,10 @@
                         <p></p>
                         <img class="photo" src="{{ student.photo.url }}">
                         <br/><br/>
-                        <a href="{% url 'edit_student' student_id=student.student_id %}"><button class="btn btn-warning">Edit</button></a>
-                        <a href="{% url 'delete_student' student_id=student.student_id %}"><button class="btn btn-danger">Delete</button></a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'edit_student' student_id=student.student_id %}"><button class="btn btn-warning">Edit</button></a>
+                            <a href="{% url 'delete_student' student_id=student.student_id %}"><button class="btn btn-danger">Delete</button></a>
+                        {% endif %}
                     </li>
                     <br/>
                 </div>
