@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Group</title>
+</head>
+<body>
+<a href="/groups"> <button><=Back</button></a>
+    {% if new_group %}
+        <p><b> New group has been created successfully! </b>
+        <p><a href="/groups/create_group">Add new?</a>
+    {% else %}
+        <form method="post">
+            {{ group_form.as_p }}
+            {% csrf_token %}
+            <p><input type='submit' value='Create group'></p>
+        </form>
+    {% endif %}
+</body>
+</html>

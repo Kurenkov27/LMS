@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%  static 'academy/styles.css' %}">
+    <title>Students</title>
+</head>
+<body>
+    <div class ="row header">
+            <div class="col-md-6">
+                <a href="/">
+                    <button type="button" class="btn btn-primary">Home</button>
+                </a>
+                {% if user.is_authenticated %}
+                    <a href="/students/create_student">
+                        <button type="button" class="btn btn-primary">Create new student</button>
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+    </div>
+    <ul class="list-group">
+        {% for student in students %}
+            <div class ="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <li class="list-group-item convert">
+                        <b>{{ student.first_name }} {{ student.last_name}}</b>, {{ student.email }}
+                        <p></p>
+                        <img class="photo" src="{{ student.photo.url }}">
+                        <br/><br/>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'edit_student' student_id=student.student_id %}"><button class="btn btn-warning">Edit</button></a>
+                            <a href="{% url 'delete_student' student_id=student.student_id %}"><button class="btn btn-danger">Delete</button></a>
+                        {% endif %}
+                    </li>
+                    <br/>
+                </div>
+            </div>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

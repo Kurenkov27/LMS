@@ -14,8 +14,9 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+from celery.schedules import crontab
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -26,8 +27,17 @@ SECRET_KEY = 'oyiad&&apr_=4ok$elokd#$p!3ir#hvxron8onkh1i$q!6i#5*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# SENDGRID Constants
+SENDGRID_KEY = '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'
+EMAIL_SENDER = 'hillelpost@pm.me'
+EMAIL_RECEIVER = 'baker.kolyamba91@gmail.com'
 
+# Celery
+CELERY_BROKER_URL = 'amqp://localhost'
+
+EXCHANGE_RATES_SOURCE = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'
+
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -38,6 +48,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'academy.apps.AcademyConfig',
+    'silk',
+    'logger',
+    'django_celery_beat',
+    'exchanger',
+    'crispy_forms',
+    'djrichtextfield'
 ]
 
 MIDDLEWARE = [
@@ -48,6 +65,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'silk.middleware.SilkyMiddleware',
+    'logger.middleware.LoggerMiddleware'
 ]
 
 ROOT_URLCONF = 'LMS.urls'
@@ -55,8 +74,7 @@ ROOT_URLCONF = 'LMS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,7 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LMS.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -81,7 +98,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -101,7 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -115,8 +130,21 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211'
+    }
+}
+
+LOGIN_REDIRECT_URL = '/'

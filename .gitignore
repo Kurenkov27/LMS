@@ -1,0 +1,30 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../../../:\Users\Nikolay\Desktop\Python tasks\homework 3\Python\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Ignored manual files
+/history.txt
+/venv/
+/academy/migrations/__pycache__/
+/academy/__pycache__/
+/__pycache__/
+/.idea/
+
+/LMS/__pycache__/
+/logger/__pycache__/
+/logger/migrations/__pycache__/
+/main.py
+/celerybeat-schedule.bak
+/celerybeat-schedule.dat
+/celerybeat-schedule.dir
+/env
+/exchanger/__pycache__/
+/exchanger/__init__.py
+*.png
+*.jpg
+/academy/templatetags/__pycache__/
+/celerybeat-schedule

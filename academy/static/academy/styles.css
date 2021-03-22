@@ -1,0 +1,43 @@
+body{
+    background-color: #91f6fa;
+}
+
+.header{
+    background-color: #056266;
+    padding: 1rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.logo{
+    color: white;
+    font-family: 'Anton', sans-serif;
+    font-size: 20px;
+}
+
+.contact{
+    align-content: end;
+    padding-right: 0;
+}
+
+.currency_table{
+    text-align: center;
+}
+
+.currency{
+    text-align: center;
+}
+
+.form_text{
+    margin-top: 10px;
+}
+
+.convert{
+    background-color: #ede882;
+}
+
+img.photo{
+    text-align: center;
+    width: 40%;
+    height: auto;
+}

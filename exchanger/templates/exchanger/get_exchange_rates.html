@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rates</title>
+</head>
+<body>
+    <table class="table">
+        <thread>
+            <tr>
+                <th></th>
+                <th>USD</th>
+                <th>EUR</th>
+                <th>RUB</th>
+            </tr>
+        </thread>
+        <tbody>
+            <tr>
+                <th>Buy</th>
+
+                <td class={{ usd_buy_status }}>{{ usd_buy }}</td>
+                <td class={{ usd_buy_status }}>{{ eur_buy }}</td>
+                <td class={{ usd_buy_status }}>{{ rur_buy }}</td>
+            </tr>
+            <tr>
+                <th>Sale</th>
+                <td class={{ usd_sell_status }}>{{ usd_sell }}</td>
+                <td class={{ eur_sell_status }}>{{ eur_sell }}</td>
+                <td class={{ rur_sell_status }}>{{ rur_sell }}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
