@@ -28,3 +28,12 @@
 *.jpg
 /academy/templatetags/__pycache__/
 /celerybeat-schedule
+/academy/tests/__pycache__/
+/scroller/__pycache__/
+/scroller/migrations/__pycache__/
+/academy/tests/__pycache__/__init__.cpython-38.pyc
+/academy/tests/__pycache__/test_models.cpython-38.pyc
+/academy/tests/__pycache__/test_views.cpython-38.pyc
+/scroller/__pycache__/__init__.cpython-38.pyc
+/scroller/__pycache__/tests.cpython-38.pyc
+/scroller/migrations/__pycache__/__init__.cpython-38.pyc
