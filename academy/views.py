@@ -142,17 +142,23 @@ def delete_group(request, group_id):
 @cache_page(60 * 5)
 def send_message(request):
     new_message = None
-
+    already_sent = False
     if request.method == 'POST':
         message_form = MessageForm(data=request.POST)
         if message_form.is_valid():
-            new_message = message_form.save(commit=False)
-            new_message.save()
+            sent = request.session.get('sent')
+            if not sent:
+                request.session['sent'] = True
+                new_message = message_form.save(commit=False)
+                new_message.save()
+            else:
+                already_sent = True
+            request.session.modified = True
 
     context = {
         'message_form': MessageForm(),
-        'new_message': new_message
+        'new_message': new_message,
+        'sent': already_sent
     }
-
     return render(request, 'academy/create_message.html', context)
 
