@@ -21,3 +21,13 @@ class LecturerFactory(DjangoModelFactory):
     first_name = FuzzyText(prefix='first_name_')
     last_name = FuzzyText(prefix='last_name_')
     email = FuzzyText(prefix='email_')
+
+
+class UserFactory(DjangoModelFactory):
+    class Meta:
+        model = User
+
+    first_name = FuzzyText(prefix='first_name_')
+    last_name = FuzzyText(prefix='last_name_')
+    username = FuzzyText(prefix='username_')
+    password = 'test_pass'

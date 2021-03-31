@@ -2,7 +2,7 @@ import pytest
 from django.urls import reverse
 
 from academy.models import Lecturer, Student, Group
-from academy.tests.factory import StudentFactory, LecturerFactory
+from academy.tests.factory import StudentFactory, LecturerFactory, UserFactory
 
 
 @pytest.mark.django_db
@@ -100,3 +100,56 @@ def test_view_uses_correct_template_groups(client):
     assert resp.status_code == 200
     expected_link = 'academy/get_groups.html'
     assert expected_link.encode() not in resp.content
+
+
+@pytest.mark.django_db
+def test_view_url_exists_at_desired_location_contact(client):
+    resp = client.get('/contact/')
+    assert resp.status_code == 200
+
+
+@pytest.mark.django_db
+def test_view_url_accessible_by_name_contact(client):
+    resp = client.get(reverse('create_message'))
+    assert resp.status_code == 200
+
+
+@pytest.mark.django_db
+def test_view_url_exists_at_desired_location_home(client):
+    resp = client.get('/')
+    assert resp.status_code == 200
+
+
+@pytest.mark.django_db
+def test_view_url_accessible_by_name_home(client):
+    resp = client.get(reverse('home'))
+    assert resp.status_code == 200
+
+
+@pytest.mark.django_db
+def test_hide_edit_button_for_not_authenticated_user(client, create_persons):
+    students = create_persons(number_of_persons=1, type_of_person='student')
+    student = students[0]
+    resp = client.get(reverse('get_students'))
+    assert resp.status_code == 200
+    expected_link = f'<a href="/students/{student.student_id}/edit/">'
+    assert expected_link.encode() not in resp.content
+
+
+@pytest.fixture
+def create_user(django_user_model):
+    def make_user(**kwargs):
+        return UserFactory.create(**kwargs)
+    return make_user
+
+
+@pytest.mark.django_db
+def test_show_edit_button_for_authenticated_user(client, create_persons, create_user):
+    students = create_persons(number_of_persons=1, type_of_person='student')
+    student = students[0]
+    user = create_user()
+    client.force_login(user)
+    resp = client.get(reverse('get_students'))
+    assert resp.status_code == 200
+    expected_link = f'<a href="/students/{student.student_id}/edit/">'
+    assert expected_link.encode() in resp.content
