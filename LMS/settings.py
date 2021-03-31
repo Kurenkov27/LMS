@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'exchanger',
     'crispy_forms',
-    'djrichtextfield'
+    'djrichtextfield',
 ]
 
 MIDDLEWARE = [
