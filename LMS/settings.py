@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'exchanger',
     'crispy_forms',
     'djrichtextfield',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -148,3 +149,5 @@ CACHES = {
 }
 
 LOGIN_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

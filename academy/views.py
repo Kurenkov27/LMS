@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+
 from academy.forms import StudentForm, LecturerForm, GroupForm, MessageForm
 from academy.models import Group, Lecturer, Student
 from django.views.decorators.cache import cache_page
@@ -88,6 +90,7 @@ def get_group(request):
     return render(request, 'academy/create_group.html', context)
 
 
+@login_required
 def edit_student(request, student_id):
     student = get_object_or_404(Student, student_id=student_id)
     if request.method == 'POST':
@@ -105,6 +108,7 @@ def delete_student(request, student_id):
     return redirect('get_students')
 
 
+@login_required
 def edit_lecturer(request, lecturer_id):
     lecturer = get_object_or_404(Lecturer, lecturer_id=lecturer_id)
     if request.method == 'POST':
@@ -122,6 +126,7 @@ def delete_lecturer(request, lecturer_id):
     return redirect('get_lecturers')
 
 
+@login_required
 def edit_group(request, group_id):
     group = get_object_or_404(Group, group_id=group_id)
     if request.method == 'POST':

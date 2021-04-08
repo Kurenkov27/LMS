@@ -16,16 +16,24 @@
             <div class="col-md-1">
                 <span class ="logo">Academy:</span>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <a href="{% url 'get_students' %}"> <button type="button" class="btn btn-primary">Students</button></a>
                 <a href="{% url 'get_lecturers' %}"> <button type="button" class="btn btn-primary">Lecturers</button></a>
                 <a href="{% url 'get_groups' %}"> <button type="button" class="btn btn-primary">Groups</button></a>
             </div>
-            <div class="col-md-1 contact"></div>
-            <div class="col-md-2 contact">
+            <div class="col-md contact justify-content-end">
                 <a href="{% url 'create_message' %}"><button type="button" class="btn btn-primary">Contact Us</button></a>
             </div>
-            <div class="col-md-1 contact"></div>
+            {% if user.is_authenticated %}
+                <div class="col-md contact justify-content-end">
+                    <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary">Logout</button></a>
+                </div>
+            {% endif %}
+            {% if not user.is_authenticated %}
+                <div class="col-md contact justify-content-end">
+                    <a href="{% url 'login' %}"><button type="button" class="btn btn-primary">Login</button></a>
+                </div>
+            {% endif %}
         </div>
     {% endcache %}
     <div class = "row currency">

@@ -18,5 +18,7 @@ urlpatterns = [
     path('lecturers/<int:lecturer_id>/delete', views.delete_lecturer, name='delete_lecturer'),
     path('groups/<int:group_id>/edit/', cache_page(60 * 10)(views.edit_group), name='edit_group'),
     path('groups/<int:group_id>/delete', views.delete_group, name='delete_group'),
-    path('contact/', views.send_message, name='create_message')
+    path('contact/', views.send_message, name='create_message'),
+    path('accounts/login', views.index, name='login'),
+    path('accounts/logout', views.index, name='logout')
 ]
