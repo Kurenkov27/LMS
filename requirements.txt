@@ -16,7 +16,6 @@ Babel==2.6.0
 backcall==0.1.0
 backports.os==0.1.1
 backports.shutil-get-terminal-size==1.0.0
-
 bitarray==0.9.2
 bkcharts==0.2
 bleach==3.1.0
