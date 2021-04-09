@@ -32,10 +32,6 @@ click-repl==0.1.6
 cloudpickle==1.0.0
 colorama==0.4.1
 comtypes==1.1.7
-conda==4.9.0
-conda-build==3.17.8
-conda-package-handling==1.7.0
-conda-verify==3.1.1
 contextlib2==0.5.5
 cryptography==2.6.1
 cycler==0.10.0
