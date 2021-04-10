@@ -60,3 +60,4 @@ urllib3==1.26.3
 vine==5.0.0
 wcwidth==0.2.5
 django-silk==0.1
+django-celery-beat==2.2.0
