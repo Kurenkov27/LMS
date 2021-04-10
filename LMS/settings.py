@@ -34,7 +34,10 @@ EMAIL_SENDER = 'hillelpost@pm.me'
 EMAIL_RECEIVER = 'baker.kolyamba91@gmail.com'
 
 # Celery
-CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_BROKER_URL = os.environ['redis://']
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 EXCHANGE_RATES_SOURCE = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'
 
