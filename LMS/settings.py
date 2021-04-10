@@ -34,7 +34,7 @@ EMAIL_SENDER = 'hillelpost@pm.me'
 EMAIL_RECEIVER = 'baker.kolyamba91@gmail.com'
 
 # Celery
-CELERY_BROKER_URL = os.environ['REDIS_URL']
+CELERY_BROKER_URL = `heroku config:get REDIS_URL`
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
