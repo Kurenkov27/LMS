@@ -10,12 +10,10 @@ from LMS.settings import EMAIL_SENDER, EMAIL_RECEIVER, SENDGRID_KEY
 from logger.models import LogRecord
 
 
-@shared_task
 def clear_log():
     LogRecord.objects.all().delete()
 
 
-@shared_task
 def send_email(data):
     context = {
         'name': data['name'],
