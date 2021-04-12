@@ -1,4 +1,7 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse, reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from academy.forms import StudentForm, LecturerForm, GroupForm, MessageForm
 from academy.models import Group, Lecturer, Student
@@ -167,3 +170,38 @@ def send_message(request):
     }
     return render(request, 'academy/create_message.html', context)
 
+
+class StudentCreate(LoginRequiredMixin, CreateView):
+    model = Student
+    template_name = 'academy/create_student.html'
+    fields = ['first_name', 'last_name', 'email', 'photo']
+
+
+class StudentEdit(LoginRequiredMixin, UpdateView):
+    model = Student
+    template_name = 'academy/edit_student.html'
+    fields = ['first_name', 'last_name', 'email', 'photo']
+
+
+class StudentDelete(LoginRequiredMixin, DeleteView):
+    model = Student
+    template_name = 'academy/delete_student.html'
+    success_url = reverse_lazy('get_students')
+
+
+class LecturerCreate(LoginRequiredMixin, CreateView):
+    model = Lecturer
+    template_name = 'academy/create_lecturer.html'
+    fields = ['first_name', 'last_name', 'email', 'photo']
+
+
+class LecturerEdit(LoginRequiredMixin, UpdateView):
+    model = Lecturer
+    template_name = 'academy/create_lecturer.html'
+    fields = ['first_name', 'last_name', 'email', 'photo']
+
+
+class LecturerDelete(LoginRequiredMixin, DeleteView):
+    model = Lecturer
+    template_name = 'academy/delete_lecturer.html'
+    success_url = reverse_lazy('get_lecturers')
