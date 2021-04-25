@@ -404,7 +404,6 @@ def group(request, pk):
             for student_key in student_keys:
                 try:
                     student = Student.objects.get(pk=student_key)
-                    print('aaa', student)
                 except Student.DoesNotExist:
                     return Response({"message": 'Student does not exist'}, status=HTTP_404_NOT_FOUND)
                 stud_list.append(student)
