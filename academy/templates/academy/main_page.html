@@ -17,12 +17,12 @@
                 <span class ="logo">Academy:</span>
             </div>
             <div class="col-md-9">
-                <a href="{% url 'get_students' %}"> <button type="button" class="btn btn-primary">Students</button></a>
-                <a href="{% url 'get_lecturers' %}"> <button type="button" class="btn btn-primary">Lecturers</button></a>
-                <a href="{% url 'get_groups' %}"> <button type="button" class="btn btn-primary">Groups</button></a>
+                <a href="{% url 'get_students' %}"> <button type="button" id="students" class="btn btn-primary">Students</button></a>
+                <a href="{% url 'get_lecturers' %}"> <button type="button" id="lecturers" class="btn btn-primary">Lecturers</button></a>
+                <a href="{% url 'get_groups' %}"> <button type="button" id="groups" class="btn btn-primary">Groups</button></a>
             </div>
             <div class="col-md contact justify-content-end">
-                <a href="{% url 'create_message' %}"><button type="button" class="btn btn-primary">Contact Us</button></a>
+                <a href="{% url 'create_message' %}"><button type="button" id="contact" class="btn btn-primary">Contact Us</button></a>
             </div>
             {% if user.is_authenticated %}
                 <div class="col-md contact justify-content-end">
@@ -31,7 +31,7 @@
             {% endif %}
             {% if not user.is_authenticated %}
                 <div class="col-md contact justify-content-end">
-                    <a href="{% url 'login' %}"><button type="button" class="btn btn-primary">Login</button></a>
+                    <a href="{% url 'login' %}" id="login"><button type="button" class="btn btn-primary">Login</button></a>
                 </div>
             {% endif %}
         </div>

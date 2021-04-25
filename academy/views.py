@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
+from LMS.settings import GROUPS_PER_PAGE
 from academy.forms import StudentForm, LecturerForm, GroupForm, MessageForm
 from academy.models import Group, Lecturer, Student
 from django.views.decorators.cache import cache_page
@@ -38,8 +39,19 @@ def get_lecturers(request):
 
 
 def get_groups(request):
-    groups = Group.objects.all().order_by('-group_id')
-    return render(request, 'academy/get_groups.html', {'groups': groups})
+    groups = Group.objects.all().order_by('-group_id').reverse()
+    context = {}
+    paginator = Paginator(groups, GROUPS_PER_PAGE)
+    page = request.GET.get('page')
+    try:
+        groups = paginator.page(page)
+    except PageNotAnInteger:
+        groups = paginator.page(1)
+    except EmptyPage:
+        groups = paginator.page(paginator.num_pages)
+    context['page'] = page
+    context['groups'] = groups
+    return render(request, 'academy/get_groups.html', context)
 
 
 def get_student(request):
