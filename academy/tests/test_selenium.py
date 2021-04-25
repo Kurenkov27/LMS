@@ -18,7 +18,8 @@ class SeleniumTest(StaticLiveServerTestCase):
     def setUp(self) -> None:
         self.student = Student.objects.create(first_name='John', last_name='Doe', email='JD@gmail.com')
         self.lecturer = Lecturer.objects.create(first_name='Adam', last_name='Smith', email='ASmith@gmail.com')
-        #self._create_groups(self.NUMBER_OF_GROUPS)
+        self.group = Group.objects.create(course='John', teacher=self.lecturer)
+        self.group.students.set((self.student,))
 
     @classmethod
     def tearDownClass(cls):
