@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Lecturer</title>
+</head>
+<body>
+    <h1>Delete Lecturer</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <p>Are you sure you want to delete "{{ lecturer.first_name }} {{ lecturer.last_name }}"?</p>
+        <input type="submit" value="Confirm" />
+    </form>
+</body>
+</html>

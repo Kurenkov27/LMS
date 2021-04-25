@@ -5,6 +5,8 @@
     <title>Login</title>
 </head>
 <body>
+{% load socialaccount %}
+
     {% if form.errors %}
         <p>Your username and password do not match! Please try again</p>
     {% endif %}
@@ -22,7 +24,9 @@
             </tr>
         </table>
         <input type="submit" value="Login" />
-        <a href="{% url 'signup' %}">Sign Up</a>
     </form>
+        <a href="{% provider_login_url 'google' %}"><button>Login With Google</button></a>
+        <br>
+        <a href="{% url 'signup' %}"><button>Sign Up</button></a>
 </body>
 </html>

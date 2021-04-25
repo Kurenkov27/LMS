@@ -1,5 +1,6 @@
 from django.db import models
 # Create your models here.
+from django.urls import reverse
 
 
 class Student(models.Model):
@@ -12,6 +13,9 @@ class Student(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
+    def get_absolute_url(self):
+        return '/students'
+
 
 class Lecturer(models.Model):
     lecturer_id = models.AutoField(primary_key=True)
@@ -22,6 +26,9 @@ class Lecturer(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
+    def get_absolute_url(self):
+        return '/lecturers'
 
 
 class Group(models.Model):
