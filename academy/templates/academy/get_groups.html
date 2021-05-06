@@ -72,6 +72,10 @@
                     </li>
                     <p></p>
                 {% endfor %}
+                <br>
+                {% if groups.paginator.num_pages != 1 %}
+                    {% include "academy/pagination.html" with page=groups %}
+                {% endif %}
             </ul>
         </div>
     </div>

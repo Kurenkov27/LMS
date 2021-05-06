@@ -1,8 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_204_NO_CONTENT, \
+    HTTP_200_OK
 
+from LMS.settings import GROUPS_PER_PAGE
 from academy.forms import StudentForm, LecturerForm, GroupForm, MessageForm
 from academy.models import Group, Lecturer, Student
 from django.views.decorators.cache import cache_page
@@ -12,6 +20,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 
 # Create your views here.
+from academy.serializers import StudentSerializer, LecturerSerializer, GroupSerializer
 from exchanger.models import ExchangeRate
 from logger.models import LogRecord
 
@@ -38,8 +47,19 @@ def get_lecturers(request):
 
 
 def get_groups(request):
-    groups = Group.objects.all().order_by('-group_id')
-    return render(request, 'academy/get_groups.html', {'groups': groups})
+    groups = Group.objects.all().order_by('-group_id').reverse()
+    context = {}
+    paginator = Paginator(groups, GROUPS_PER_PAGE)
+    page = request.GET.get('page')
+    try:
+        groups = paginator.page(page)
+    except PageNotAnInteger:
+        groups = paginator.page(1)
+    except EmptyPage:
+        groups = paginator.page(paginator.num_pages)
+    context['page'] = page
+    context['groups'] = groups
+    return render(request, 'academy/get_groups.html', context)
 
 
 def get_student(request):
@@ -205,3 +225,191 @@ class LecturerDelete(LoginRequiredMixin, DeleteView):
     model = Lecturer
     template_name = 'academy/delete_lecturer.html'
     success_url = reverse_lazy('get_lecturers')
+
+
+@api_view(['GET', 'POST'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def students(request):
+    if request.method == 'GET':
+        articles = Student.objects.all()
+        serializer = StudentSerializer(articles, many=True)
+        return Response(serializer.data)
+
+    if request.method == 'POST':
+        rdata = request.data
+        data = {
+            'first_name': rdata.get('first_name'),
+            'last_name': rdata.get('last_name'),
+            'email': rdata.get('email'),
+        }
+        serializer = StudentSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=HTTP_201_CREATED)
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'DELETE', 'PUT'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def student(request, pk):
+    try:
+        student = Student.objects.get(pk=pk)
+    except Student.DoesNotExist:
+        return Response(status=HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = StudentSerializer(student)
+        return Response(serializer.data)
+
+    if request.method == 'DELETE':
+        student.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
+
+    if request.method == 'PUT':
+        first_name = request.data.get('first_name')
+        if first_name:
+            student.first_name = first_name
+        last_name = request.data.get('last_name')
+        if last_name:
+            student.last_name = last_name
+        email = request.data.get('email')
+        if email:
+            student.email = email
+        student.save()
+        serializer = StudentSerializer(student)
+        return Response(serializer.data, status=HTTP_200_OK)
+
+
+@api_view(['GET', 'POST'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def lecturers(request):
+    if request.method == 'GET':
+        lecturers = Lecturer.objects.all()
+        serializer = LecturerSerializer(lecturers, many=True)
+        return Response(serializer.data)
+
+    if request.method == 'POST':
+        rdata = request.data
+        data = {
+            'first_name': rdata.get('first_name'),
+            'last_name': rdata.get('last_name'),
+            'email': rdata.get('email'),
+        }
+        serializer = LecturerSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=HTTP_201_CREATED)
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'DELETE', 'PUT'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def lecturer(request, pk):
+    try:
+        lecturer = Lecturer.objects.get(pk=pk)
+    except Lecturer.DoesNotExist:
+        return Response(status=HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = LecturerSerializer(lecturer)
+        return Response(serializer.data)
+
+    if request.method == 'DELETE':
+        lecturer.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
+
+    if request.method == 'PUT':
+        first_name = request.data.get('first_name')
+        if first_name:
+            lecturer.first_name = first_name
+        last_name = request.data.get('last_name')
+        if last_name:
+            lecturer.last_name = last_name
+        email = request.data.get('email')
+        if email:
+            lecturer.email = email
+        lecturer.save()
+        serializer = LecturerSerializer(lecturer)
+        return Response(serializer.data, status=HTTP_200_OK)
+
+
+@api_view(['GET', 'POST'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def groups(request):
+    if request.method == 'GET':
+        groups = Group.objects.all()
+        serializer = GroupSerializer(groups, many=True)
+        return Response(serializer.data)
+
+    if request.method == 'POST':
+        rdata = request.data
+        data = {
+            'course': rdata.get('course'),
+            'teacher': rdata.get('teacher'),
+            'students': rdata.get('students'),
+        }
+        try:
+            lecturer = Lecturer.objects.get(pk=data['teacher'])
+        except Lecturer.DoesNotExist:
+            return Response({"message": 'Lecturer does not exist'}, status=HTTP_404_NOT_FOUND)
+        for student_key in data['students']:
+            try:
+                student = Student.objects.get(pk=student_key)
+            except Student.DoesNotExist:
+                return Response({"message": f'Student {student_key} does not exist'}, status=HTTP_404_NOT_FOUND)
+        group.teacher = lecturer
+        serializer = GroupSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=HTTP_201_CREATED)
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'DELETE', 'PUT'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def group(request, pk):
+    try:
+        group = Group.objects.get(pk=pk)
+    except Group.DoesNotExist:
+        return Response(status=HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = GroupSerializer(group)
+        return Response(serializer.data)
+
+    if request.method == 'DELETE':
+        group.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
+
+    if request.method == 'PUT':
+        course = request.data.get('course')
+        if course:
+            group.course = course
+        lecturer_key = request.data.get('teacher')
+        if lecturer_key:
+            try:
+                lecturer = Lecturer.objects.get(pk=lecturer_key)
+            except Lecturer.DoesNotExist:
+                return Response({"message": 'Lecturer does not exist'}, status=HTTP_404_NOT_FOUND)
+            group.teacher = lecturer
+        student_keys = request.data.get('students')
+        if student_keys or student_keys == []:
+            stud_list = []
+            for student_key in student_keys:
+                try:
+                    student = Student.objects.get(pk=student_key)
+                except Student.DoesNotExist:
+                    return Response({"message": 'Student does not exist'}, status=HTTP_404_NOT_FOUND)
+                stud_list.append(student)
+            print("end")
+            group.students.set(stud_list)
+        group.save()
+        serializer = GroupSerializer(group)
+        return Response(serializer.data, status=HTTP_200_OK)
+
