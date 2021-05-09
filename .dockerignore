@@ -3,3 +3,4 @@
 .pytest_cache
 *Dockerfile*
 *docker-compose*
+.env
