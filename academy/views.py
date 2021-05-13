@@ -1,16 +1,19 @@
+import jwt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_204_NO_CONTENT, \
-    HTTP_200_OK
+    HTTP_200_OK, HTTP_403_FORBIDDEN
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework_jwt.serializers import jwt_payload_handler
 
-from LMS.settings import GROUPS_PER_PAGE
+from LMS.settings import GROUPS_PER_PAGE, SECRET_KEY
 from academy.forms import StudentForm, LecturerForm, GroupForm, MessageForm
 from academy.models import Group, Lecturer, Student
 from django.views.decorators.cache import cache_page
@@ -228,7 +231,7 @@ class LecturerDelete(LoginRequiredMixin, DeleteView):
 
 
 @api_view(['GET', 'POST'])
-@authentication_classes([SessionAuthentication, BasicAuthentication])
+@authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def students(request):
     if request.method == 'GET':
@@ -251,7 +254,7 @@ def students(request):
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
-@authentication_classes([SessionAuthentication, BasicAuthentication])
+@authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def student(request, pk):
     try:
@@ -283,7 +286,7 @@ def student(request, pk):
 
 
 @api_view(['GET', 'POST'])
-@authentication_classes([SessionAuthentication, BasicAuthentication])
+@authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def lecturers(request):
     if request.method == 'GET':
@@ -306,7 +309,7 @@ def lecturers(request):
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
-@authentication_classes([SessionAuthentication, BasicAuthentication])
+@authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def lecturer(request, pk):
     try:
@@ -338,7 +341,7 @@ def lecturer(request, pk):
 
 
 @api_view(['GET', 'POST'])
-@authentication_classes([SessionAuthentication, BasicAuthentication])
+@authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def groups(request):
     if request.method == 'GET':
@@ -371,7 +374,7 @@ def groups(request):
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
-@authentication_classes([SessionAuthentication, BasicAuthentication])
+@authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def group(request, pk):
     try:
@@ -413,3 +416,32 @@ def group(request, pk):
         serializer = GroupSerializer(group)
         return Response(serializer.data, status=HTTP_200_OK)
 
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def authenticate_user(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+    if not email or not password:
+        res = {'error': 'Please provide an email and a password'}
+        return Response(res)
+
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        message = 'No user with provided email'
+        res = {'error': message}
+        return Response(res, status=HTTP_404_NOT_FOUND)
+
+    if not user or not user.check_password(password):
+        message = "Can't authenticate with the given credentials or the account has " \
+                  "been deactivated"
+        res = {'error': message}
+        return Response(res, status=HTTP_403_FORBIDDEN)
+
+    payload = jwt_payload_handler(user)
+    token = jwt.encode(payload, SECRET_KEY)
+    user_details = {
+        'name': f'{user.first_name} {user.last_name}',
+        'token': token
+    }
+    return Response(user_details, status=HTTP_200_OK)
