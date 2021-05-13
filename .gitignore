@@ -44,3 +44,4 @@
 /exchanger/migrations/__pycache__/__init__.cpython-36.pyc
 __pycache__/
 chromdriver.exe
+.env
