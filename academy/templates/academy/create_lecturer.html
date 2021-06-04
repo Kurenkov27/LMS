@@ -10,10 +10,10 @@
         <p><b> New lecturer has been created successfully! </b>
         <p><a href="/lecturers/create_lecturer">Add new?</a>
     {% else %}
-        <form method="post">
-            {{ lecturer_form.as_p }}
+        <form method="post" enctype="multipart/form-data">
+            {{ form.as_p }}
             {% csrf_token %}
-            <p><input type='submit' value='Create lecturer'></p>
+            <p><input type='submit' value='Save'></p>
         </form>
     {% endif %}
 </body>

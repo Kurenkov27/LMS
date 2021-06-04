@@ -18,7 +18,10 @@
     <div class ="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            {% if new_message %}
+            {% if sent %}
+                <p><b> You have recently sent us a message. We will contact you ASAP </b>
+                <p><a href="/contact"><=Back</a>
+            {% elif new_message %}
                 <p><b> Your message was sent! </b>
                 <p><a href="/contact"><=Back</a>
             {% else %}
